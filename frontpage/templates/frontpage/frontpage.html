@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block mainjumbotron %}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Hello, world!</h1>
+        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+      </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% for MakeBoard in MakeBoards %}
+        <div class="col-xs-6 col-md-3">
+            <a href="{% url 'post_detail' pk=MakeBoard.pk %}" class="thumbnail">
+                {% load thumbnail %}
+                <img src = "{% thumbnail MakeBoard.photo 50x50 crop %}" width="242" height="200" alt = "Generic placeholder thumbnail">
+                <div class = "caption">
+                    <h3>{{ MakeBoard.title }}</h3>
+                    <span class="text-muted">by {{ MakeBoard.author }}</span>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+{% endblock %}

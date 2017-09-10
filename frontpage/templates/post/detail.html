@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block subhead %}
+{% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>{{ Board.title }}</h1>
+<p class="lead"><i class="fa fa-user"></i> by <a href="">{{ Board.author }}</a></p>
+<hr>
+<p><i class="fa fa-calendar"></i> Posted on {{Board.published_date}}</p>
+<p>Do you want to follow? <i class="fa fa-hand-o-right"></i>  <span id="follow" class="btn btn-default btn-sm"> follow?</span></p>
+<p>Do you like this post? <i class="fa fa-hand-o-right"></i>  <span id="like" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-heart"></span>  <span id="likenumber"></span></span></p>
+<hr>
+{{ Board.desc | safe }}
+<script>
+$("document").ready(function()
+    {
+        $("#likenumber").text('{{number}}');
+        var like = "{{ like }}";
+        if (like == 'on')
+        {
+            $("#like").addClass('like');
+        }
+        else
+        {
+            $("#like").addClass('dislike');
+        }
+
+        if ('{{ follow }}' == 'on')
+        {
+            $("#follow").addClass('btn-primary').removeClass('btn-default');
+        }
+        else
+        {
+            $("#follow").addClass('btn-default').removeClass('btn-primary');
+        }
+    }
+);
+
+$("#like").click(function () {
+
+      $.ajax({
+        url: '/ajax/like/',
+        data: {
+            'userpk' : {{user.pk}},
+            'postpk' : {{Board.pk}}
+        },
+        dataType: 'json',
+        success: function (data) {
+            $("#like").removeClass(data.remove).addClass(data.add);
+            $("#likenumber").text(data.number);
+          }
+        }
+      );
+
+    });
+
+$("#follow").click(function () {
+
+      $.ajax({
+        url: '/ajax/follow/',
+        data: {
+            'userpk' : {{user.pk}},
+            'authorpk' : {{Board.author.pk}}
+        },
+        dataType: 'json',
+        success: function (data) {
+            $("#follow").removeClass(data.remove).addClass(data.add);          }
+        }
+      );
+
+    });
+</script>
+{% endblock %}

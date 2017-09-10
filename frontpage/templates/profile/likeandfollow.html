@@ -1,0 +1,32 @@
+{% extends 'profile/base.html' %}
+
+{% block content %}
+<h2 class="sub-header">Likes</h2>
+<div class="row placeholders">
+    {% for like in likes %}
+        <div class="col-xs-6 col-sm-3 placeholder">
+            <a href="{% url 'post_detail' pk=like.pk %}">
+             <img src = "{{ like.photo.url }}" width="200" height="200" class="" alt="Generic placeholder thumbnail">
+                                      <h4>{{ like.title }}</h4>
+             <span class="text-muted">Something else</span>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+<h2 class="sub-header">Following</h2>
+<div class="row placeholders">
+    {% for following in followings %}
+        <div class="col-xs-6 col-sm-3 placeholder">
+            <h4>{{ following.user.username }}</h4>
+        </div>
+    {% endfor %}
+</div>
+<h2 class="sub-header">Follower</h2>
+<div class="row placeholders">
+    {% for follower in followers %}
+        <div class="col-xs-6 col-sm-3 placeholder">
+            <h4>{{ follower.username }}</h4>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

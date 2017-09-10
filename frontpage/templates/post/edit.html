@@ -1,0 +1,35 @@
+{% extends 'profile/base.html' %}
+
+{% block more_head %}
+  <!-- include summernote css/js-->
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.js"></script>
+  <link href="/static/django_summernote/summernote.css" type="text/css" media="all" rel="stylesheet" />
+  <link href="/static/django_summernote/django_summernote_inplace.css" type="text/css" media="all" rel="stylesheet" />
+  <script type="text/javascript" src="/static/django_summernote/summernote.min.js"></script>
+  <script type="text/javascript" src="/static/django_summernote/jquery.ui.widget.js"></script>
+  <script type="text/javascript" src="/static/django_summernote/jquery.iframe-transport.js"></script>
+  <script type="text/javascript" src="/static/django_summernote/jquery.fileupload.js"></script>
+  <script type="text/javascript" src="/static/django_summernote/ResizeSensor.js"></script>
+{% endblock %}
+
+{% block content %}
+  <div id="summernote"><h1 class="page-header">Note your making</h1></div>
+  <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <label for="id_title">Title</label>
+    <div>
+      {{ editBoard.title | safe }}
+    </div>
+    <hr>
+    <label for="id_photo">Thumnail</label>
+    <div>
+      {{ editBoard.photo | safe }}
+    </div>
+    <hr>
+    <label for="id_desc">Description</label>
+    <div>
+      {{ editBoard.desc | safe }}
+    </div>
+  <input class="btn btn-default" type="submit" value="Submit" />
+  </form>
+{% endblock %}
